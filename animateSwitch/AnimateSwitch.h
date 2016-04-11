@@ -8,8 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^ActionBlock_T)(BOOL isOn);
+
 @interface AnimateSwitch : UIView
 
 @property (nonatomic, assign, getter=isOn) BOOL on;
+
+- (instancetype)initWithFrame:(CGRect)frame andActionBlock:(ActionBlock_T)actionBlock;
 
 @end

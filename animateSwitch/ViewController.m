@@ -18,13 +18,20 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    AnimateSwitch *mySwitch1 = [[AnimateSwitch alloc]initWithFrame:CGRectMake(100, 100, 200, 100)];
+    AnimateSwitch *mySwitch1 = [[AnimateSwitch alloc]initWithFrame:CGRectMake(100, 100, 200, 100) andActionBlock:^(BOOL isOn) {
+        NSLog(@"%d",isOn);
+    }];
     [self.view addSubview:mySwitch1];
     
-    AnimateSwitch *mySwitch2 = [[AnimateSwitch alloc]initWithFrame:CGRectMake(100, 300, 100, 50)];
+    AnimateSwitch *mySwitch2 = [[AnimateSwitch alloc]initWithFrame:CGRectMake(100, 300, 100, 50) andActionBlock:^(BOOL isOn) {
+        NSLog(@"%d",isOn);
+    }];
+
     [self.view addSubview:mySwitch2];
     
-    AnimateSwitch *mySwitch3 = [[AnimateSwitch alloc]initWithFrame:CGRectMake(100, 500, 50, 25)];
+    AnimateSwitch *mySwitch3 = [[AnimateSwitch alloc]initWithFrame:CGRectMake(100, 500, 50, 25) andActionBlock:^(BOOL isOn) {
+        NSLog(@"%d",isOn);
+    }];
     [self.view addSubview:mySwitch3];
 }
 

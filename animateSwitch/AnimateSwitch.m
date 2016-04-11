@@ -9,12 +9,15 @@
 #import "AnimateSwitch.h"
 #define LINE_WIDTH 2
 
+
+
 @interface AnimateSwitch ()
 
 @property (nonatomic, weak) UIView *roundButton;
 @property (nonatomic, weak) CAShapeLayer* buttonShapeLayer;
 @property (nonatomic, assign) NSInteger step; //动画完成程度，0刚开始，100结束
 @property (nonatomic,strong) CADisplayLink *timeLink;
+@property (nonatomic, weak) ActionBlock_T actionBlock;
 
 @end
 
@@ -22,10 +25,11 @@
 
 #pragma mark - init
 
-- (instancetype)initWithFrame:(CGRect)frame {
+- (instancetype)initWithFrame:(CGRect)frame andActionBlock:(ActionBlock_T)actionBlock{
     if (self = [super initWithFrame:frame]) {
         _on = NO;
         _step = 100;
+        _actionBlock = actionBlock;
         [self configUI];
     }
     
@@ -92,6 +96,13 @@
 
 - (void)setOn:(BOOL)on {
     _on = on;
+    if (_actionBlock) {
+         __weak __typeof(self) weakSelf = self;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            weakSelf.actionBlock(self.isOn);
+        });
+        
+    }
     if (!self.timeLink) {
         _step = 0;
         _timeLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(changeStep)];
@@ -159,7 +170,6 @@
     
     CGAffineTransform transform = CGAffineTransformMakeTranslation(r * 2 * 0.1 * percentOfOn, 0);
     self.buttonShapeLayer.affineTransform = CGAffineTransformRotate(transform, - M_PI_4 * percentOfOn);
-    NSLog(@"percent:%f",percentOfOn);
     
     self.buttonShapeLayer.path = path.CGPath;
     
