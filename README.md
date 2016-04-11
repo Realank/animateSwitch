@@ -1,5 +1,5 @@
 # animateSwitch
-a animate switch
+an animate switch
 
 一时兴起，准备做一个可以动画显示的开关，用户制定大小，根据大小布局内容，在开关切换的时候会有平滑的动画：
 
